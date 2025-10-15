@@ -66,13 +66,14 @@ jobs:
         safety check
     
     - name: Upload security reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: security-reports
         path: |
           bandit-report.json
           safety-report.json
+        if-no-files-found: ignore
 
   # ==================== TESTING JOBS ====================
   unit-tests:
@@ -133,13 +134,14 @@ jobs:
         name: codecov-umbrella
     
     - name: Upload coverage artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: coverage-reports
         path: |
           coverage.xml
           htmlcov/
+        if-no-files-found: ignore
 
   integration-tests:
     name: Integration Tests
@@ -336,7 +338,7 @@ jobs:
         echo "Docker image test passed!"
     
     - name: Upload Docker image artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: docker-image
         path: /tmp/docker-image.tar
@@ -349,7 +351,7 @@ jobs:
     
     steps:
     - name: Download Docker image
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: docker-image
         path: /tmp
